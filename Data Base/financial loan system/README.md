@@ -113,6 +113,24 @@ the atributes not principal have to depend of the primary key not for other atri
 
 now it´s posible to make the model entity relational
 
+now it´s necesary to make the raltions
+
+a client can have many loans
+
+a loans only have one client
+
+a loans have only one co-debt
+
+a client can have many pays
+
+a pay can only have one client
+
+loan can have one loan
+
+a codebt can have many loans 
+
+
+
 
 
 
