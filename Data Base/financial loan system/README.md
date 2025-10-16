@@ -121,11 +121,11 @@ a loans only have one client
 
 a loans have only one co-debt
 
-a client can have many pays
+a loan can have many pays
 
 a pay can only have one client
 
-loan can have one loan
+
 
 a codebt can have many loans 
 
