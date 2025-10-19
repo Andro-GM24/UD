@@ -30,7 +30,8 @@ CREATE TABLE loan (
     date_creation TIMESTAMP,
     client_ID int references client(client_ID),
     co_debt_ID int references co_debt(co_debt_ID),
-    frequency varchar(20)
+    frequency varchar(20),
+    delinquent_debt float check ( amount>=0) DEFAULT 0
 
 
 );
