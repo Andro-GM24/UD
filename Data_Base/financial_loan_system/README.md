@@ -111,9 +111,64 @@ the atributes not principal have to depend of the primary key not for other atri
 | 1004-D | Monthly | 2025-11-10 | $650.00 |
 | 1003-C | Quarterly | 2026-01-15 | $1,500.00 |
 
+***
+
+### data dictionary
+
+#### table client:
+
+##### client_ID:
+
+- data type: integer 
+- length: It´s the one automatically assigned by the database engine, in psql it is a range between -2,147,483,648 to 2,147,483,648.
+- constraints:is a primary kay, so have to be unique auto incremental
+- description: is the code that represent the client
+
+
+##### phone:
+
+- data type: Varchar 
+- length: 15 because  cover the lenght standard of phone numbers
+- constraints: not null
+- description: is the phone number to contact with the client
+
+##### name:
+
+- data type: Varchar 
+- length: 30 because  cover the standard lenght of names
+- constraints: not null
+- description: is the name  of the client
+
+##### passsword:
+
+- data type: Varchar 
+- length: 15 because demands a short answer
+- constraints: not null unique
+- description: is the password  of the client, is unique to avoid problems of privacity.
+
+
+##### email:
+
+- data type: Varchar 
+- length: 254 because  follow the standard of RFC 5322
+- constraints: not null
+- description: is the email  to contact with the client
+
+##### address:
+
+- data type: Varchar 
+- length: 120 because  follow the posible length of each part of the address like name of street,avenue.. etc.
+- constraints: not null
+- description: is the address  to contact with the client
+
+
+***
+
+
+
 now it´s posible to make the model entity relational
 
-now it´s necesary to make the raltions
+now it´s necesary to make the relations
 
 a client can have many loans
 
