@@ -129,6 +129,12 @@ a pay can only have one client
 
 a codebt can have many loans 
 
+there is something that are important and is the amount of money that are in delinquent debt
+,it will add to the table of loan:
+
+delinquent_debt float check ( amount>0)
+
+with this value is posible to calculate the percentage increase of the loan.
 
 
 
