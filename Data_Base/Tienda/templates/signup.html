@@ -1,0 +1,28 @@
+<!--  necesito que esté form pida costumer.name, costumer.lastname, costumer.email,
+   costumer.phone, costumer.password-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Mi App</title>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div class="SignUP-container">
+        <h2>Crear cuenta</h2>
+        <form method="POST" action="{{ url_for('customer_bp.signup') }}">
+            <input type="text" name="name" placeholder="Nombre de usuario" required>
+            <input type="text" name="lastname" placeholder="Apellido" required>
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+            <input type="tel" name="phone" placeholder="Número de teléfono" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Registrarse</button>
+        </form>
+      
+    </div>
+</body>
+</html>
