@@ -18,10 +18,21 @@ class customer_repository:
         cursor.close()
         
 
-    def validate_input(self, username, password, email):
-        # Logic to validate user input
-        pass
+    def validate_input(self, email, password):
 
-    def send_confirmation_email(self, email):
-        # Logic to send a confirmation email
-        pass
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT * FROM  fn_validar_usuario(%s)",
+            (email,)
+        )
+        result = cursor.fetchone()
+        cursor.close()
+        if result:
+            if(result[1]==password):#el uno sería la contraseña
+                return True
+        return False# si no encuentra el usuario o la contraseña es incorrecta
+        
+        
+
+    

@@ -415,4 +415,104 @@ $$;
 -- Para usarla:
 
 
+-- nueva función :validar usuario
 
+CREATE OR REPLACE FUNCTION fn_validar_usuario(    p_email VARCHAR)
+RETURNS  TABLE (--debe es buscar la constraseña con el email
+    email VARCHAR,
+    contrasena VARCHAR
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        c.email,
+        c.contrasena-- con esto ya la podemos comparar
+    from cliente as c
+    WHERE c.email = p_email;
+END;
+$$ LANGUAGE plpgsql; --se va a cambiar para que solo se guarde el hash
+
+
+
+--cargar tabla de categorias
+
+CREATE OR REPLACE FUNCTION fn_listar_categorias()
+RETURNS TABLE (
+    id_categoria INT,
+    nombre VARCHAR,
+)   
+LANGUAGE plpgsql AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        c.id_categoria,
+        c.nombre
+    FROM CATEGORIA AS c;
+END;
+$$;
+-- Para usarla:
+ SELECT * FROM fn_listar_categorias();
+
+
+-- función para listar productos en vista de productos(home)
+
+CREATE OR REPLACE FUNCTION fn_listar_productos()
+RETURNS TABLE (
+    id_producto INT,
+    nombre VARCHAR,-- quisiera añadirle codigo de imagen
+    descripcion VARCHAR,
+    precio FLOAT,
+    estado VARCHAR, -- Dominio 'estado'
+    id_categoria INT,
+    nombre_categoria VARCHAR
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        p.id_producto,
+        p.nombre,
+        p.descripcion,
+        p.precio,
+        p.estado,
+        p.id_categoria,
+        c.nombre AS nombre_categoria
+    FROM PRODUCTO AS p
+    JOIN CATEGORIA AS c ON p.id_categoria = c.id_categoria;
+
+END;-- hacer operación join de categoria de una vez
+$$;
+-- Para usarla:
+ SELECT * FROM fn_listar_productos();
+
+
+-- función para ver detalle de un producto
+
+CREATE OR REPLACE FUNCTION fn_ver_detalle_producto(p_id_producto INT)
+RETURNS TABLE (
+    id_producto INT,
+    nombre VARCHAR,-- quisiera añadirle codigo de imagen
+    descripcion VARCHAR,
+    precio FLOAT,
+    estado VARCHAR, -- Dominio 'estado'
+    id_categoria INT,
+    nombre_categoria VARCHAR
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        p.id_producto,
+        p.nombre,
+        p.descripcion,
+        p.precio,
+        p.estado,
+        p.id_categoria,
+        c.nombre AS nombre_categoria
+    FROM PRODUCTO AS p
+    JOIN CATEGORIA AS c ON p.id_categoria = c.id_categoria
+    WHERE p.id_producto = p_id_producto;
+
+END;-- hacer operación join de categoria de una vez
+$$;

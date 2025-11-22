@@ -7,3 +7,34 @@
 se llamara a stock y se elegira de ahí
 entonces la vaina es como miercoles se maneja es amierda
 de python con html embebido-->
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Mi App</title>  
+</head>
+<body>
+    <div class="home-container">
+        <h1>Bienvenido a Mi App</h1>
+        <div class="product-slider">
+            <!-- Aquí se generarán los bloques de productos de forma automática -->
+            <!-- aca usa lo que se envia en variable products--> 
+            {% for product in products %}
+            <div class="product-card">
+                <h3>{{ product.nombre }}</h3>
+                <p>{{ product.estado }}</p>
+                <p>Precio: ${{ product.precio }}</p>
+                <a href="{{ url_for('producto_bp.product_detail', id_producto=product.id_producto) }}">
+    Ver Producto <!--aca es el link que enviara a la vista detalalda-->
+</a>
+                
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
