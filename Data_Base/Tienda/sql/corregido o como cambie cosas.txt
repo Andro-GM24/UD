@@ -1,0 +1,154 @@
+CREATE TABLE PRODUCTO(
+    id_producto INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    descripcion VARCHAR(255),
+    precio FLOAT,
+    estado VARCHAR(50),
+    id_categoria INT
+);
+
+CREATE TABLE CLIENTE(
+    id_cliente INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    email VARCHAR(150),
+    telefono VARCHAR(20),
+    contrasena VARCHAR(100)
+);
+
+CREATE TABLE DIRECCION (
+    id_direccion INT PRIMARY KEY,
+    ciudad VARCHAR(100),
+    codigo_postal VARCHAR(20),
+    departamento VARCHAR(100),
+    d_especificada VARCHAR(255)
+);
+
+CREATE TABLE CATEGORIA(
+    id_categoria INT PRIMARY KEY,
+    nombre VARCHAR(100),
+    decripcion VARCHAR(255)
+);
+
+CREATE TABLE PEDIDO(
+    id_pedido INT PRIMARY KEY,
+    fecha_pedido TIMESTAMP,
+    estado VARCHAR(50),
+    id_cliente INT,
+    id_metodo INT,
+    id_direccion INT
+);
+
+CREATE TABLE DETALLE_PEDIDO(
+    id_detalle_pedido INT PRIMARY KEY,
+    id_pedido INT,
+    id_producto INT,
+    cantidad INT
+);
+
+CREATE TABLE METODO_PAGO(
+    id_metodo INT PRIMARY KEY,
+    tipo VARCHAR(50),
+    detalles_pago VARCHAR(255)
+);
+
+CREATE TABLE CARRITO(
+    id_carrito INT PRIMARY KEY,
+    id_cliente INT
+);
+
+CREATE TABLE DETALLE_CARRITO(
+    id_detalle_carrito INT PRIMARY KEY,
+    id_carrito INT,
+    id_producto INT,
+    cantidad INT
+);
+
+CREATE TABLE INVENTARIO_PRODUCTO(
+    id_inventario INT PRIMARY KEY,
+    id_producto INT
+);
+
+CREATE TABLE DETALLE_INVENTARIO(
+    id_detalle_inventario INT PRIMARY KEY,
+    id_inventario INT,
+    stock INT,
+    id_direccion INT
+);
+poner valores a los varchar, 15/11(2025 11:30) y funciona
+
+__________________________________________________________________________
+se corregió una n  
+
+--RELACIONES
+
+
+-- RELACION (PEDIDOS)
+
+ALTER TABLE PEDIDO ADD FOREIGN KEY (id_cliente) REFERENCES CLIENTE (id_cliente);
+
+ALTER TABLE PEDIDO ADD FOREIGN KEY (id_metodo) REFERENCES METODO_PAGO(id_metodo);
+
+ALTER TABLE PEDIDO ADD FOREIGN KEY (id_direccion) REFERENCES DIRECCION (id_direccion);
+
+
+
+--RELACION DETALLE_PEDIDO
+
+
+ALTER TABLE DETALLE_PEDIDO ADD FOREIGN KEY (id_pedido) REFERENCES PEDIDO(id_pedido);
+ALTER TABLE DETALLE_PEDIDO ADD FOREIGN KEY (id_producto) REFERENCES PRODUCTO(id_producto);
+
+
+--RELACION PRODUCTO
+
+ALTER TABLE PRODUCTO ADD FOREIGN KEY (id_categoria) REFERENCES CATEGORIA(id_categoria);
+
+
+--RELACION CARRITO
+
+ALTER TABLE CARRITO ADD FOREIGN KEY (id_cliente) REFERENCES CLIENTE(id_cliente);
+
+--RELACION DETALLE_CARRITO
+
+ALTER TABLE DETALLE_CARRITO ADD FOREIGN KEY (id_carrito) REFERENCES CARRITO(id_carrito);
+ALTER TABLE DETALLE_CARRITO ADD FOREIGN KEY (id_producto) REFERENCES PRODUCTO(id_producto);
+
+--RELACION INVENTARIO
+
+ALTER TABLE INVENTARIO_PRODUCTO ADD FOREIGN KEY (id_producto) REFERENCES PRODUCTO(id_producto);
+
+
+--RELACION DETALLE INVENTARIO
+
+ALTER TABLE DETALLE_INVENTARIO ADD FOREIGN KEY (id_inventario) REFERENCES INVENTARIO_PRODUCTO(id_inventario);
+ALTER TABLE DETALLE_INVENTARIO ADD FOREIGN KEY (id_direccion) REFERENCES DIRECCION(id_direccion);
+
+--CORRECCIÓN DE CLIENTE
+
+--ALTER TABLE cliente ADD COLUMN contrasena VARCHAR(15)
+
+
+___________________________________
+//dominio bien}
+_______________________________________
+
+varias cosas de funciones y procedimientos algunas contienen errores
+--CREAR CLIENTE 
+
+CREATE OR REPLACE PROCEDURE sp_crear_cliente(
+    p_id_cliente INT,
+    p_nombre VARCHAR,
+    p_apellido VARCHAR,
+    p_email VARCHAR,
+    p_telefono VARCHAR, -- Dominio 'telefono'
+	p_contrasena VARCHAR
+
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    INSERT INTO CLIENTE (id_cliente, nombre, apellido, email, telefono,contrasena)
+    VALUES (p_id_cliente, p_nombre, p_apellido, p_email, p_telefono, p_contrasena);
+END;
+$$; yo le añadi la contra
+

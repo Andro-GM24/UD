@@ -3,7 +3,7 @@ from flask import Blueprint, Flask, app, render_template, request
 from model.Customer import  Customer 
 from sql.customer_repository import customer_repository
 from sql.producto_repository import producto_repository     
-
+from flask import session
 
 customer_bp = Blueprint('customer_bp', __name__)
 
@@ -36,6 +36,7 @@ def login():
         data = request.form
 
         if(customer_repository().validate_input(data["email"], data["password"])):
+            session["id_customer"]= customer_repository().get_id_by_email(data["email"])
             return render_template("Home.html", products=producto_repository().listar_productos())
         else:
             return "usuario o contraseña incorrecta"

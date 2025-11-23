@@ -516,3 +516,82 @@ BEGIN
 
 END;-- hacer operación join de categoria de una vez
 $$;
+
+
+-- crear función para ver el carrito de un usuario
+--acceder a carrito,detalle carrito y producto
+CREATE OR REPLACE FUNCTION fn_ver_carrito_usuario(p_id_cliente INT)
+RETURNS TABLE (
+    --que necesito para mostrar?
+    id_carrito INT,
+    id_producto INT,
+    nombre_producto VARCHAR,
+    descripcion_producto VARCHAR,
+    cantidad INT,
+    precio_unitario FLOAT,
+    estado_producto VARCHAR,
+    nombre_categoria VARCHAR
+
+)
+LANGUAGE plpgsql AS $$
+BEGIN   
+    RETURN QUERY
+    SELECT 
+        c.id_carrito,
+        p.id_producto,
+        p.nombre AS nombre_producto,
+        p.descripcion AS descripcion_producto,
+        dc.cantidad,--el orden importa
+        p.precio AS precio_unitario,
+        p.estado AS estado_producto,
+        cat.nombre AS nombre_categoria
+        
+        
+    FROM CARRITO AS c -- obtenemos de clase carrito el id del cliente
+    JOIN DETALLE_CARRITO AS dc ON c.id_carrito = dc.id_carrito-- unimos con detalle carrito con id carrito
+    JOIN PRODUCTO AS p ON dc.id_producto = p.id_producto -- unimos detalle carrito con producto
+    JOIN CATEGORIA AS cat ON p.id_categoria = cat.id_categoria-- unimos producto con categoria para mostrar el nombre
+    WHERE c.id_cliente = p_id_cliente;-- condición para que sea del cliente  
+
+END;
+$$;
+
+select * from fn_ver_carrito_usuario(3);
+
+-- crear función para obtener el id de un cliente con email
+CREATE OR REPLACE FUNCTION fn_obtener_id_cliente_por_email(p_email VARCHAR)
+RETURNS INT
+LANGUAGE plpgsql AS $$
+DECLARE
+    v_id_cliente INT;
+BEGIN
+    SELECT c.id_cliente INTO v_id_cliente
+    FROM CLIENTE AS c
+    WHERE c.email = p_email;
+    RETURN v_id_cliente;
+END;
+$$;
+-- Para usarla: 
+
+
+
+select   fn_obtener_id_cliente_por_email('sofia.r@mail.com');
+
+
+-- crear procedimiento para agregar producto al carrito dado el id del carrito, id del producto y cantidad
+
+CREATE OR REPLACE PROCEDURE sp_agregar_producto_carrito(
+   
+    p_id_carrito INT,
+    p_id_producto INT,
+    p_cantidad INT
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    INSERT INTO DETALLE_CARRITO ( id_carrito, id_producto, cantidad)
+    VALUES ( p_id_carrito, p_id_producto, p_cantidad);
+END;
+$$;
+
+-- Para usarla:
+-- CALL sp_agregar_producto_carrito(1, 2, 3); -- Agrega 3 unidades del producto con id 2 al carrito con id 1

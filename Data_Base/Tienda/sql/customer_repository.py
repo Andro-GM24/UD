@@ -33,6 +33,18 @@ class customer_repository:
                 return True
         return False# si no encuentra el usuario o la contraseña es incorrecta
         
-        
+    def get_id_by_email(self, email):
+
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT fn_obtener_id_cliente_por_email(%s)",
+            (email,)
+        )
+        result = cursor.fetchone()
+        cursor.close()
+        if result:
+            return result[0]
+        return None
 
     

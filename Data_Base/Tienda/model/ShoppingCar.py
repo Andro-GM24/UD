@@ -12,14 +12,21 @@ sale de stock por pedido, cuando pasa eso se afecta esa parte,
 
 class ShoppingCar:
 
-    id_shoppingcar=""
-   
-    cantidad=0
+    
 
-    def __init__(self,id_shoppingcar,cantidad):
+    def __init__(self,id_shoppingcar):
         """Método constructor para inicializar atributos de instancia."""
         self.id_shoppingcar = id_shoppingcar
+        self._items=[]
 
-        self.productos=[]
-        self.producto_cantidad = (self.productos,cantidad)
-        
+    @property
+    def items(self):
+        return self._items 
+
+
+    def agregar_item(self, producto, cantidad):
+        self._items.append((producto, cantidad))
+
+    def calcular_total(self):
+        return sum(prod.precio * cant for prod, cant in self._items)
+    

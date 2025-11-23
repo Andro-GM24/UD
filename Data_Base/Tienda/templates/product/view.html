@@ -1,7 +1,13 @@
-<h1>{{ product.name }}</h1>
-<p>{{ product.description }}</p>
-<p>Precio: {{ product.price }}</p>
-<p>Estado: {{ product.status }}</p>
-<p>Categoría: {{ product. }}</p>
+<h1>{{ product.nombre }}</h1>
+<p>{{ product.descripcion }}</p>
+<p>Precio: {{ product.precio }}</p>
+<p>Estado: {{ product.estado }}</p>
+<p>Categoría: {{ product.nombre_categoria }}</p>
 
-<!--corregir lo que pide poriqeu está mal-->
+{% if product.estado == 'En Stock' %}
+    <a href="{{ url_for('carrito_bp.agregar_al_carrito', id_producto=product.id_producto) }}">Agregar al Carrito</a>
+
+{% else %}
+    <p>Producto no disponible</p>
+{% endif %}
+
