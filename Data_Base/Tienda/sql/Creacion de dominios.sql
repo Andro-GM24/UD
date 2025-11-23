@@ -17,7 +17,7 @@
 
 	--DOMINIO PEDIDO (ESTADO)
 
-	CREATE DOMAIN estado_pedido as VARCHAR(20) CHECK (VALUE IN ('Pagado','c','Finalizado','Por pagar'));
+	CREATE DOMAIN estado_pedido as VARCHAR(20) CHECK (VALUE IN ('Pagado','','Finalizado','Por pagar'));
 
 
 	--CREAR RESTRICCION PARA TELEFONO

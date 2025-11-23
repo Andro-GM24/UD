@@ -40,9 +40,13 @@ de python con html embebido-->
                 <h3>{{ product.nombre }}</h3>
                 <p>{{ product.estado }}</p>
                 <p>Precio: ${{ product.precio }}</p>
-                <a href="{{ url_for('producto_bp.product_detail', id_producto=product.id_producto) }}">
-    Ver Producto <!--aca es el link que enviara a la vista detalalda-->
-</a>
+                <a href="{{ url_for('producto_bp.product_detail', id_producto=product.id_producto) }}">Ver Producto</a>
+                <!-- Formulario para agregar al carrito -->
+                <form action="{{ url_for('carrito_bp.add_to_cart') }}" method="post" style="display:inline; margin-left:8px;">
+                    <input type="hidden" name="id_producto" value="{{ product.id_producto }}" />
+                    <input type="hidden" name="cantidad" value="1" />
+                    <button type="submit">Añadir al carrito</button>
+                </form>
                 
             </div>
             {% endfor %}

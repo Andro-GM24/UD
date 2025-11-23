@@ -36,6 +36,42 @@ class carrito_repository:
 
 
     def agregar_al_carrito(self, id_usuario, id_producto, cantidad):
-        pass
-
+        conn = get_connection()
+        cursor = conn.cursor()
     
+        id_carrito = None
+
+        try:
+            # 1. Buscar el carrito existente del usuario
+            cursor.execute("SELECT id_carrito FROM CARRITO WHERE id_cliente = %s", (id_usuario,))
+            row = cursor.fetchone()
+
+            if row:
+                # Carrito encontrado
+                id_carrito = row[0]
+            else:
+                # 2. Si el carrito no existe, crearlo (usando una secuencia si es posible, o MAX+1 si no)
+                # Nota: Si id_carrito es una clave serial/identity, podrías intentar INSERT y obtener el ID
+                # Para mantener la estructura MAX+1:
+                cursor.execute("SELECT COALESCE(MAX(id_carrito), 0) + 1 FROM CARRITO")
+                id_carrito = cursor.fetchone()[0]
+                cursor.execute("INSERT INTO CARRITO (id_carrito, id_cliente) VALUES (%s, %s)", (id_carrito, id_usuario))
+
+            # 3. Llamar al procedimiento almacenado para agregar/actualizar el producto
+            # sp_agregar_producto_carrito  (p_id_carrito, p_id_producto, p_cantidad)
+            cursor.execute("CALL sp_agregar_producto_carrito(%s, %s, %s)", (id_carrito, id_producto, cantidad))
+        
+            # 4. Confirmar TODAS las operaciones (creación de carrito si fue necesario + adición de detalle)
+            conn.commit()
+        
+        except Exception as e:
+            conn.rollback()
+            # Puedes imprimir el error para depuración si lo deseas: print(e)
+            raise # Re-lanzar la excepción para que el código superior sepa que falló
+
+        finally:
+            cursor.close()
+            conn.close()
+    
+        # Retornar el ID del carrito para confirmación
+        return id_carrito

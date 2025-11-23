@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request, session
+from flask import Blueprint, redirect, render_template, request, session, url_for
 from model.ShoppingCar import ShoppingCar
 from sql.carrito_repository import carrito_repository
 
@@ -19,4 +19,27 @@ def carrito_view():
 
         return render_template( "carrito/view.html",items_carrito=carrito.items,total=carrito.calcular_total())
     
+@carrito_bp.route('/carrito/add', methods=['POST'])
+def add_to_cart():
+    # Agrega un producto al carrito del usuario en sesión
+    sess = session.get('id_customer')
+    if not sess:
+        return redirect('/login')
+
+    data = request.form
+    try:
+        id_producto = int(data.get('id_producto'))
+    except Exception:
+        return redirect(url_for('producto_bp.home'))
+
+    try:
+        cantidad = int(data.get('cantidad', 1))
+    except Exception:
+        cantidad = 1
+
+    # Llama al repositorio para agregar el producto (usa stored procedure en DB)
+    carrito_repo.agregar_al_carrito(sess, id_producto, cantidad)
+
+    return redirect(url_for('producto_bp.home'))
+
 #hacer función para agregar al carrito    

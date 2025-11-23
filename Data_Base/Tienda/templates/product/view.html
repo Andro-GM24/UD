@@ -5,7 +5,12 @@
 <p>Categoría: {{ product.nombre_categoria }}</p>
 
 {% if product.estado == 'En Stock' %}
-    <a href="{{ url_for('carrito_bp.agregar_al_carrito', id_producto=product.id_producto) }}">Agregar al Carrito</a>
+    <!-- Usar formulario POST hacia el endpoint add_to_cart -->
+    <form action="{{ url_for('carrito_bp.add_to_cart') }}" method="post" style="display:inline;">
+        <input type="hidden" name="id_producto" value="{{ product.id_producto }}" />
+        <input type="hidden" name="cantidad" value="1" />
+        <button type="submit">Agregar al Carrito</button>
+    </form>
 
 {% else %}
     <p>Producto no disponible</p>

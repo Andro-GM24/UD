@@ -117,7 +117,7 @@ INSERT INTO PEDIDO (id_pedido, fecha_pedido, estado, id_cliente, id_metodo, id_d
 (1, '2025-10-25 10:00:00', 'Finalizado', 1, 1, 1),    -- Ana, Tarjeta, Bogotá
 (2, '2025-10-25 15:30:00', 'Finalizado', 2, 2, 2),    -- Luis, Efectivo, Medellín
 (3, '2025-10-26 09:00:00', 'Pagado', 3, 1, 3),        -- Sofía, Tarjeta, Cali
-(4, '2025-10-26 18:45:00', 'Cancelado', 4, 3, 4),     -- Carlos, Otro, Barranquilla
+(4, '2025-10-26 18:45:00', 'c', 4, 3, 4),     -- Carlos, Otro, Barranquilla
 (5, '2025-10-27 11:20:00', 'Finalizado', 5, 2, 5),    -- Marta, Efectivo, Cartagena
 (6, '2025-10-28 14:00:00', 'Pagado', 6, 1, 6),        -- Javier, Tarjeta, Bucaramanga
 (7, '2025-10-28 20:10:00', 'Por pagar', 7, 2, 7),     -- Elena, Efectivo, Pereira
@@ -128,7 +128,7 @@ INSERT INTO PEDIDO (id_pedido, fecha_pedido, estado, id_cliente, id_metodo, id_d
 (12, '2025-10-31 17:30:00', 'Por pagar', 3, 3, 3),
 (13, '2025-11-01 09:45:00', 'Finalizado', 5, 1, 5),
 (14, '2025-11-01 13:15:00', 'Pagado', 7, 2, 7),
-(15, '2025-11-02 18:00:00', 'Cancelado', 9, 1, 9);
+(15, '2025-11-02 18:00:00', 'c', 9, 1, 9);
 
 INSERT INTO DETALLE_CARRITO (id_detalle_carrito, id_carrito, id_producto, cantidad) VALUES
 -- Carrito 1 (Ana)

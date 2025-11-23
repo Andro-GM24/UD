@@ -440,7 +440,7 @@ $$ LANGUAGE plpgsql; --se va a cambiar para que solo se guarde el hash
 CREATE OR REPLACE FUNCTION fn_listar_categorias()
 RETURNS TABLE (
     id_categoria INT,
-    nombre VARCHAR,
+    nombre VARCHAR
 )   
 LANGUAGE plpgsql AS $$
 BEGIN
@@ -463,7 +463,7 @@ RETURNS TABLE (
     nombre VARCHAR,-- quisiera añadirle codigo de imagen
     descripcion VARCHAR,
     precio FLOAT,
-    estado VARCHAR, -- Dominio 'estado'
+    estado estado, -- Dominio 'estado'
     id_categoria INT,
     nombre_categoria VARCHAR
 )
@@ -495,7 +495,7 @@ RETURNS TABLE (
     nombre VARCHAR,-- quisiera añadirle codigo de imagen
     descripcion VARCHAR,
     precio FLOAT,
-    estado VARCHAR, -- Dominio 'estado'
+    estado estado, -- Dominio 'estado'
     id_categoria INT,
     nombre_categoria VARCHAR
 )
@@ -517,6 +517,9 @@ BEGIN
 END;-- hacer operación join de categoria de una vez
 $$;
 
+-- Para usarla:
+ SELECT * FROM fn_listar_productos();
+
 
 -- crear función para ver el carrito de un usuario
 --acceder a carrito,detalle carrito y producto
@@ -529,7 +532,7 @@ RETURNS TABLE (
     descripcion_producto VARCHAR,
     cantidad INT,
     precio_unitario FLOAT,
-    estado_producto VARCHAR,
+    estado_producto estado,
     nombre_categoria VARCHAR
 
 )
