@@ -57,3 +57,16 @@ def remove_from_cart():
         return redirect(url_for('carrito_bp.carrito_view'))
     carrito_repo.eliminar_del_carrito(sess, id_producto)
     return redirect(url_for('carrito_bp.carrito_view'))
+
+
+
+@carrito_bp.route('/carrito/pedido', methods=['POST'])
+def hacer_pedido():
+    sess = session.get('id_customer')
+    if not sess:
+        return redirect('/login')
+    
+    carrito_repo.hacer_pedido(sess)
+
+
+    return redirect(url_for('pedido_pb.pedido_view'))

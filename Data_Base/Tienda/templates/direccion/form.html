@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dirección de Envío</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00000020;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Ingresar Dirección de Envío</h2>
+
+        <form action="{{ url_for('direccion_bp.direccion_view') }}" method="post">
+
+            <label for="city">Ciudad</label>
+            <input type="text" id="city" name="city" required>
+
+            <label for="postal_code">Código Postal</label>
+            <input type="text" id="postal_code" name="postal_code" required>
+
+            <label for="department">Departamento</label>
+            <input type="text" id="department" name="department" required>
+
+            
+            <label for="d_especific">Dirección específica</label>
+            <input type="text" id="d_especific" name="d_especific" placeholder="Ej: Casa #5, Apto 302, Frente al parque" required>
+
+            <button type="submit">Guardar dirección y hacer pedido</button>
+        </form>
+    </div>
+
+</body>
+</html>

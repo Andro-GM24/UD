@@ -1,3 +1,4 @@
+from flask import redirect
 from model.ShoppingCar import ShoppingCar
 from model.Producto import Producto
 from sql.database import get_connection
@@ -96,3 +97,39 @@ class carrito_repository:
     
         # Retornar el ID del carrito para confirmación
         return id_carrito
+    
+
+    #se llamará despues de crear dirección
+
+    def hacer_pedido(self, id_usuario ,id_direccion ):
+        conn = get_connection()
+        cursor = conn.cursor()
+        # Obtener id_carrito del usuario
+        cursor.execute("SELECT id_carrito FROM CARRITO WHERE id_cliente = %s", (id_usuario,))
+        row = cursor.fetchone()
+        if not row:
+            cursor.close()
+            conn.close()
+            #mandar pa login
+            return redirect('/login')
+        id_carrito = row[0]
+
+        #crear dirección del cliente
+
+
+        try:
+            cursor.execute("SELECT fn_hacer_pedido_desde_carrito(%s, %s, %s, %s) ", (id_carrito, id_usuario, id_direccion,1))
+            id_pedido = cursor.fetchone()[0]
+            conn.commit()
+        except Exception as e:
+            conn.rollback()
+            print(e)
+            raise
+        finally:
+            cursor.close()
+            conn.close()
+
+        # Retornar el ID del carrito para confirmación
+        return id_pedido   
+
+        

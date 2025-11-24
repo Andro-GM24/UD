@@ -37,6 +37,10 @@ def login():
 
         if(customer_repository().validate_input(data["email"], data["password"])):
             session["id_customer"]= customer_repository().get_id_by_email(data["email"])
+            #toca ver  si es vendedor o cliente con un llamado
+            
+            
+
             return render_template("Home.html", products=producto_repository().listar_productos())
         else:
             return "usuario o contraseña incorrecta"

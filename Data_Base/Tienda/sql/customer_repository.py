@@ -14,6 +14,13 @@ class customer_repository:
             "CALL sp_crear_cliente(%s, %s, %s, %s, %s, %s)",
             (customer.id_customer, customer.name, customer.lastname, customer.email, customer.phone, customer.password)
         )
+        if customer.tipo == "vendedor":
+            cursor.execute(
+                "CALL sp_crear_vendedor(%s)",
+                (customer.id_customer,)
+            )
+
+
         conn.commit()
         cursor.close()
         

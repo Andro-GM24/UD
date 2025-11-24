@@ -5,6 +5,6 @@ def get_connection():
         host="localhost",
         database="tienda",
         user="postgres",
-        password="nomames674",
+        password="MYSQL",
         port=5432
     )

@@ -130,7 +130,7 @@ ALTER TABLE DETALLE_INVENTARIO ADD FOREIGN KEY (id_direccion) REFERENCES DIRECCI
 
 
 ___________________________________
-//dominio bien}
+//dominio bien
 _______________________________________
 
 varias cosas de funciones y procedimientos algunas contienen errores
@@ -152,3 +152,108 @@ BEGIN
 END;
 $$; yo le añadi la contra
 
+
+___________________________________
+añadir serial a detalle carrito 
+ALTER TABLE DETALLE_CARRITO
+    ALTER COLUMN id_detalle_carrito
+    SET DATA TYPE INT;
+
+CREATE SEQUENCE detalle_carrito_seq OWNED BY DETALLE_CARRITO.id_detalle_carrito;
+
+ALTER TABLE DETALLE_CARRITO
+    ALTER COLUMN id_detalle_carrito
+    SET DEFAULT nextval('detalle_carrito_seq');
+
+
+
+
+SELECT setval(
+    'detalle_carrito_seq',
+    (SELECT MAX(id_detalle_carrito) FROM detalle_carrito)
+);
+
+
+--_______________________________________
+
+se quiere agregar usuario tipo vendedor y tipo cliente o comprador
+
+ALTER TABLE CLIENTE
+ADD COLUMN TIPO VARCHAR(20);
+
+si es vendedor entonces tendrá: "vendedor"
+
+ se debe añadir columna a usuario
+
+ -se debe cambiar el registro
+ -se debe cambiar el menu para las opciones para vendedores comprador
+ .crud prodcuto
+
+ crear 
+
+ ___________________________________
+
+ hacer autoincremental el id de detalle pedido y de pedido
+
+
+
+
+
+CREATE SEQUENCE PEDIDO_seq OWNED BY PEDIDO.id_pedido;
+
+ALTER TABLE PEDIDO
+    ALTER COLUMN id_pedido
+    SET DEFAULT nextval('PEDIDO_seq');
+
+
+
+
+SELECT setval(
+    'PEDIDO_seq',
+    (SELECT MAX(id_pedido) FROM PEDIDO)
+);
+
+
+___________________________________
+
+ hacer autoincremental el id de detalle pedido y de pedido
+
+
+
+
+
+CREATE SEQUENCE DETALLE_PEDIDO_seq OWNED BY DETALLE_PEDIDO.id_detalle_pedido;
+
+ALTER TABLE DETALLE_PEDIDO
+    ALTER COLUMN id_detalle_pedido
+    SET DEFAULT nextval('DETALLE_PEDIDO_seq');
+
+
+
+
+SELECT setval(
+    'DETALLE_PEDIDO_seq',
+    (SELECT MAX(id_detalle_pedido) FROM DETALLE_PEDIDO)
+);
+
+___________________________________
+
+ hacer autoincremental el id de detalle DIRECCION
+
+
+
+
+
+CREATE SEQUENCE DIRECCION_seq OWNED BY DIRECCION.id_direccion;
+
+ALTER TABLE DIRECCION
+    ALTER COLUMN id_direccion
+    SET DEFAULT nextval('DIRECCION_seq');
+
+
+
+
+SELECT setval(
+    'DIRECCION_seq',
+    (SELECT MAX(id_direccion) FROM DIRECCION)
+);

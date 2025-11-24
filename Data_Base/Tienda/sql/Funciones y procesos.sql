@@ -598,3 +598,130 @@ $$;
 
 -- Para usarla:
 -- CALL sp_agregar_producto_carrito(1, 2, 3); -- Agrega 3 unidades del producto con id 2 al carrito con id 1
+
+
+--crear función para agregar tipo de usuario
+
+CREATE OR REPLACE PROCEDURE sp_crear_vendedor(
+    p_id_cliente INT
+)   
+LANGUAGE plpgsql AS $$
+BEGIN
+    UPDATE cliente
+    SET TIPO = 'vendedor'
+    WHERE id_cliente = p_id_cliente;
+END;
+$$;
+
+CALL sp_crear_vendedor(3);
+
+-- función para pagar el pedido ( pasar a pedido desde carrito)
+
+CREATE OR REPLACE FUNCTION fn_hacer_pedido_desde_carrito(
+    p_id_carrito INT,
+    p_id_cliente INT,
+    p_id_direccion INT,
+    p_id_metodo INT
+)
+RETURNS INT
+LANGUAGE plpgsql AS $$
+DECLARE
+    v_id_pedido INT;
+BEGIN
+    -- Crear el pedido
+    INSERT INTO pedido (fecha_pedido, estado, id_cliente, id_metodo, id_direccion)
+    VALUES (NOW(), 'Por pagar', p_id_cliente, p_id_metodo, p_id_direccion)
+    RETURNING id_pedido INTO v_id_pedido;
+
+    -- Pasar productos del carrito al detalle del pedido
+    INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad)
+    SELECT v_id_pedido, dc.id_producto, dc.cantidad
+    FROM detalle_carrito dc
+    WHERE dc.id_carrito = p_id_carrito;
+
+    -- Vaciar el carrito
+    DELETE FROM detalle_carrito
+    WHERE id_carrito = p_id_carrito;
+
+    RETURN v_id_pedido;
+END;
+$$;
+
+
+
+--crear  dirección y se altera la tabla
+
+
+CREATE OR REPLACE FUNCTION fn_insertar_direccion(
+    p_ciudad VARCHAR,
+    p_codigo_postal VARCHAR,
+    p_departamento VARCHAR,
+    p_especificada VARCHAR
+)
+RETURNS INT
+LANGUAGE plpgsql AS $$
+DECLARE
+    v_id INT;
+BEGIN
+    INSERT INTO direccion (ciudad, codigo_postal, departamento, d_especificada)
+    VALUES (p_ciudad, p_codigo_postal, p_departamento, p_especificada)
+    RETURNING id_direccion INTO v_id;
+
+    RETURN v_id;
+END;
+$$;
+-- Para usarla:
+ SELECT fn_insertar_direccion('CiudadX', '12345', 'DepartamentoY', 'Calle Z #123'); 
+
+
+--función para obtener los productos de un pedido específico
+
+ 
+ CREATE OR REPLACE FUNCTION fn_get_productos_pedido(p_id_pedido INT)
+RETURNS TABLE (
+    id_producto INT,
+    nombre_producto VARCHAR,
+    cantidad INT,
+    precio_unitario FLOAT
+   
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        dp.id_producto,
+        p.nombre,
+        dp.cantidad,
+        p.precio
+        
+    FROM DETALLE_PEDIDO dp
+    INNER JOIN PRODUCTO p ON p.id_producto = dp.id_producto
+    WHERE dp.id_pedido = p_id_pedido;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Para usarla:
+ SELECT * FROM fn_get_productos_pedido(2);
+
+
+ -- función para tener el pedido por id
+
+ CREATE OR REPLACE FUNCTION obtener_pedido(p_id INT)
+RETURNS TABLE (
+    id_pedido INT,
+    fecha_pedido TIMESTAMP,
+    estado VARCHAR,
+    id_cliente INT,
+    id_metodo INT,
+    id_direccion INT
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT *
+    FROM PEDIDO
+    WHERE PEDIDO.id_pedido = p_id;
+END;
+$$ LANGUAGE plpgsql;
+-- Para usarla:
