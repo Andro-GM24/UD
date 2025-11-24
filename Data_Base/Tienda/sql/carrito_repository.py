@@ -72,6 +72,27 @@ class carrito_repository:
         finally:
             cursor.close()
             conn.close()
+
+    def eliminar_del_carrito(self, id_usuario, id_producto):
+        conn = get_connection()
+        cursor = conn.cursor()
+        # Obtener id_carrito del usuario
+        cursor.execute("SELECT id_carrito FROM CARRITO WHERE id_cliente = %s", (id_usuario,))
+        row = cursor.fetchone()
+        if not row:
+            cursor.close()
+            conn.close()
+            return
+        id_carrito = row[0]
+        try:
+            cursor.execute("CALL sp_eliminar_producto_carrito(%s, %s)", (id_carrito, id_producto))
+            conn.commit()
+        except Exception:
+            conn.rollback()
+            raise
+        finally:
+            cursor.close()
+            conn.close()
     
         # Retornar el ID del carrito para confirmación
         return id_carrito
