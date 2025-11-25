@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de Compras</title>
-</html>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carrito.css') }}">
+</head>
+
+
 <body>
     <h1>Carrito de Compras</h1>
     <table><!--tabla que muestra los productos-->
@@ -40,3 +43,6 @@
     
     <form action="{{ url_for('direccion_bp.direccion_view') }}" method="get">
         <button type="submit">hacer pedido</button> 
+    </form>
+</body>
+</html>

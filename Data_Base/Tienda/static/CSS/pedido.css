@@ -1,0 +1,229 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    color: #ffffff;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.py-5 {
+    padding: 40px 0;
+}
+
+/* Card principal */
+.card {
+    background: #1e1e2e;
+    border: 1px solid #2d2d44;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header del card */
+.card-header {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    padding: 20px 30px;
+}
+
+.card-header h3 {
+    color: #0a0a14;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Body del card */
+.card-body {
+    padding: 30px;
+}
+
+.card-body p {
+    color: #b8b8d4;
+    font-size: 15px;
+    margin: 8px 0;
+}
+
+.card-body p strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.card-body hr {
+    border: none;
+    border-top: 1px solid #2d2d44;
+    margin: 20px 0;
+}
+
+.card-body h4 {
+    color: #00d4ff;
+    font-size: 20px;
+    margin: 20px 0 16px 0;
+}
+
+/* Tabla */
+.table-responsive {
+    overflow-x: auto;
+    margin-top: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #252538;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+thead {
+    background: #2d2d44;
+}
+
+thead tr th {
+    padding: 14px 16px;
+    text-align: left;
+    color: #00d4ff;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+tbody tr {
+    border-bottom: 1px solid #2d2d44;
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background: #2a2a3e;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr td {
+    padding: 14px 16px;
+    color: #b8b8d4;
+    font-size: 15px;
+}
+
+tbody tr td:first-child {
+    color: #8888aa;
+    font-size: 13px;
+}
+
+tbody tr td:nth-child(2) {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Total */
+.text-end {
+    text-align: right;
+}
+
+.mt-3 {
+    margin-top: 20px;
+}
+
+.text-end h4 {
+    color: #ffffff;
+    font-size: 22px;
+    padding: 16px;
+    background: #252538;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.text-end h4 strong {
+    color: #00d4ff;
+}
+
+/* Footer del card */
+.card-footer {
+    background: #252538;
+    padding: 20px 30px;
+    border-top: 1px solid #2d2d44;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary {
+    background: #3d3d5c;
+    color: #ffffff;
+}
+
+.btn-secondary:hover {
+    background: #4d4d6c;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(61, 61, 92, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 10px;
+    }
+    
+    .card-header,
+    .card-body,
+    .card-footer {
+        padding: 20px;
+    }
+    
+    .card-header h3 {
+        font-size: 20px;
+    }
+    
+    table {
+        font-size: 13px;
+    }
+    
+    thead tr th,
+    tbody tr td {
+        padding: 10px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .text-end {
+        text-align: center;
+    }
+    
+    .text-end h4 {
+        font-size: 18px;
+    }
+}

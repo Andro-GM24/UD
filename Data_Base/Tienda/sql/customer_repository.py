@@ -54,4 +54,39 @@ class customer_repository:
             return result[0]
         return None
 
+    def listar_customers(self):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM cliente") 
+        results = cursor.fetchall()
+        customers = []
+        for row in results:# obtiene una tupla por cada fila
+            customer = Customer(
+                id_customer=row[0],
+                name=row[1],
+                lastname=row[2],
+                email=row[3],
+                phone=row[4],
+                password="",   
+                tipo=row[6]
+            )
+            customers.append(customer)
+        cursor.close()
+        return customers # devuelve los clientes
     
+    def actualizar_customer(self, id_customer, data):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "CALL sp_actualizar_cliente(%s, %s, %s, %s, %s, %s)",
+            (
+                id_customer,
+                data.get("name"),
+                data.get("lastname"),
+                data.get("email"),
+                data.get("phone"),
+                data.get("tipo")
+            )
+        )
+        conn.commit()
+        cursor.close()

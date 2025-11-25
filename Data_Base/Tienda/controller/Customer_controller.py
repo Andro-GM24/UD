@@ -1,5 +1,5 @@
 
-from flask import Blueprint, Flask, app, render_template, request
+from flask import Blueprint, Flask, app, redirect, render_template, request, url_for
 from model.Customer import  Customer 
 from sql.customer_repository import customer_repository
 from sql.producto_repository import producto_repository     
@@ -40,9 +40,13 @@ def login():
             #toca ver  si es vendedor o cliente con un llamado
             
             
-
-            return render_template("Home.html", products=producto_repository().listar_productos())
+            return redirect(url_for('customer_bp.home'))
+            
         else:
             return "usuario o contraseña incorrecta"
 
     return render_template("login.html")
+
+@customer_bp.route("/home")
+def home():
+    return render_template("Home.html", products=producto_repository().listar_productos())

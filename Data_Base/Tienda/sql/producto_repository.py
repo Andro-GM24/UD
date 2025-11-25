@@ -46,3 +46,22 @@ class producto_repository:
             return producto
         cursor.close()
         return None    
+
+    def actualizar_producto(self, id_producto, data):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "CALL sp_actualizar_producto(%s, %s, %s, %s, %s, %s)",
+            (
+                id_producto,
+                data.get("nombre"),
+                data.get("descripcion"),
+                data.get("precio"),
+                data.get("estado"),
+                data.get("categoria_id")
+                
+
+            )
+        )
+        conn.commit()
+        cursor.close()

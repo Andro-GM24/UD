@@ -1,18 +1,28 @@
-<h1>{{ product.nombre }}</h1>
-<p>{{ product.descripcion }}</p>
-<p>Precio: {{ product.precio }}</p>
-<p>Estado: {{ product.estado }}</p>
-<p>Categoría: {{ product.nombre_categoria }}</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.nombre }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detalle_producto.css') }}">
+</head>
+<body>
+    <div class="product-detail-container">
+        <h1>{{ product.nombre }}</h1>
+        <p>{{ product.descripcion }}</p>
+        <p>Precio: ${{ product.precio }}</p>
+        <p>Estado: {{ product.estado }}</p>
+        <p>Categoría: {{ product.nombre_categoria }}</p>
 
-{% if product.estado == 'En Stock' %}
-    <!-- Usar formulario POST hacia el endpoint add_to_cart -->
-    <form action="{{ url_for('carrito_bp.add_to_cart') }}" method="post" style="display:inline;">
-        <input type="hidden" name="id_producto" value="{{ product.id_producto }}" />
-        <input type="hidden" name="cantidad" value="1" />
-        <button type="submit">Agregar al Carrito</button>
-    </form>
-
-{% else %}
-    <p>Producto no disponible</p>
-{% endif %}
-
+        {% if product.estado == 'En Stock' %}
+            <form action="{{ url_for('carrito_bp.add_to_cart') }}" method="post">
+                <input type="hidden" name="id_producto" value="{{ product.id_producto }}" />
+                <input type="hidden" name="cantidad" value="1" />
+                <button type="submit">Agregar al Carrito</button>
+            </form>
+        {% else %}
+            <p>Producto no disponible</p>
+        {% endif %}
+    </div>
+</body>
+</html>

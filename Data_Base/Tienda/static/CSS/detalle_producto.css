@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    color: #ffffff;
+}
+
+/* Contenedor principal del producto */
+.product-detail-container {
+    background: #1e1e2e;
+    border: 1px solid #2d2d44;
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    max-width: 700px;
+    width: 100%;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    color: #00d4ff;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+p {
+    color: #b8b8d4;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 16px 0;
+    padding: 14px 20px;
+    background: #252538;
+    border-radius: 10px;
+    border-left: 3px solid #3d3d5c;
+}
+
+/* Estilos específicos para diferentes tipos de información */
+p:first-of-type {
+    font-size: 17px;
+    color: #d4d4e8;
+    border-left-color: #00d4ff;
+}
+
+/* Precio destacado */
+p:nth-of-type(2) {
+    color: #00d4ff;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    background: #252538;
+    border: 2px solid #00d4ff;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+/* Estado del producto */
+p:nth-of-type(3) {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Categoría */
+p:nth-of-type(4) {
+    color: #8888aa;
+    font-size: 15px;
+    text-align: center;
+    border-left-color: #5d5d7c;
+}
+
+/* Formulario */
+form {
+    margin-top: 30px;
+    text-align: center;
+}
+
+button[type="submit"] {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    color: #0a0a14;
+    padding: 16px 40px;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 212, 255, 0.5);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Mensaje de no disponible */
+p:last-of-type {
+    color: #ff6b6b;
+    font-weight: 600;
+    text-align: center;
+    border-left-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .product-detail-container {
+        padding: 40px 30px;
+    }
+    
+    h1 {
+        font-size: 26px;
+    }
+    
+    p {
+        font-size: 15px;
+    }
+    
+    p:nth-of-type(2) {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 20px 10px;
+    }
+    
+    .product-detail-container {
+        padding: 30px 20px;
+    }
+    
+    h1 {
+        font-size: 22px;
+    }
+    
+    button[type="submit"] {
+        padding: 14px 30px;
+        font-size: 16px;
+    }
+}
