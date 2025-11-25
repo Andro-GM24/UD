@@ -17,14 +17,15 @@ class Customer:
     phone  =""   
     password=""
 
-    def __init__(self,name,lastname,email,phone,password,shoppingcar=None):
+    def __init__(self,id_customer,name,lastname,email,phone,password,tipo, shoppingcar=None):
         # despues agregar o arreglar el carrito de compras
-        self.id_customer = None
+        self.id_customer = id_customer
         self.name=name
         self.lastname=lastname
         self.email=email
         self.phone=phone
         self.password=password
+        self.tipo = tipo
         self.adresses=[]
         self.orders=[]  
         self.shoppingcar=shoppingcar

@@ -85,8 +85,43 @@ class customer_repository:
                 data.get("lastname"),
                 data.get("email"),
                 data.get("phone"),
-                data.get("tipo")
+                data.get("password")
             )
         )
         conn.commit()
         cursor.close()
+
+    def es_admin(self, email):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT tipo FROM cliente WHERE email = %s",
+            (email,)
+        )
+        result = cursor.fetchall()
+        cursor.close()
+        
+        return result[0][0] == 'vendedor' if result else False  # ← Usa índice numérico  
+    
+    def get_customer_by_id(self, id_customer):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT * FROM cliente WHERE id_cliente = %s",
+            (id_customer,)
+        )
+        row = cursor.fetchone()
+        cursor.close()
+        
+        if row:
+            customer = Customer(
+                name=row[1],
+                lastname=row[2],
+                email=row[3],
+                phone=row[4],
+                password=row[5],
+                tipo=row[6],
+                id_customer=row[0]
+            )
+            return customer
+        return None

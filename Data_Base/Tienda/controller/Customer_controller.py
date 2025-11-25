@@ -12,13 +12,14 @@ customer_bp = Blueprint('customer_bp', __name__)
 def signup():
     if request.method == "POST":
         data = request.form
-
+        tipo = data.get("tipo")  # obtener el tipo de usuario, por defecto "cliente"
         customer = Customer(
             name=data["name"],
             lastname=data["lastname"],
             email=data["email"],
             phone=data["phone"],
-            password=data["password"]
+            password=data["password"],
+            tipo=tipo
         )
         customer.crear_id(customer.email)
 
@@ -39,6 +40,9 @@ def login():
             session["id_customer"]= customer_repository().get_id_by_email(data["email"])
             #toca ver  si es vendedor o cliente con un llamado
             
+            # Verificar si es admin
+            es_admin = customer_repository().es_admin(data["email"])
+            session["es_admin"] = es_admin 
             
             return redirect(url_for('customer_bp.home'))
             

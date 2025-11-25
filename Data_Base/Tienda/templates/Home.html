@@ -20,14 +20,14 @@ de python con html embebido-->
 <body>
      <!--es un sidebar estatico-->
      <div class="sidebar">
-        <h2>Menú</h2>
-       
-        <a href="{{ url_for('carrito_bp.carrito_view') }}"> Mi carrito</a>
-        
-        
-        
-
-    </div>
+    <h2>Menú</h2>
+    <a href="{{ url_for('carrito_bp.carrito_view') }}">Mi carrito</a>
+    
+    {% if session.get('es_admin') %}
+        <a href="{{ url_for('admin_bp.admin_productos') }}">Admin Productos</a>
+        <a href="{{ url_for('admin_bp.admin_customers') }}">Admin Clientes</a>
+    {% endif %}
+</div>
 
 
 

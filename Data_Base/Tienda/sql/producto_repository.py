@@ -65,3 +65,31 @@ class producto_repository:
         )
         conn.commit()
         cursor.close()
+        conn.close()
+
+    def get_producto_by_id(self, id_producto):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            """SELECT p.id_producto, p.nombre, p.descripcion, p.precio, p.estado, 
+                    p.id_categoria, c.nombre as nombre_categoria
+            FROM producto p
+            LEFT JOIN categoria c ON p.id_categoria = c.id_categoria
+            WHERE p.id_producto = %s""",
+            (id_producto,)
+        )
+        row = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        if row:
+            producto = Producto(
+                id_producto=row[0],
+                nombre=row[1],
+                descripcion=row[2],
+                precio=row[3],
+                estado=row[4],
+                
+                nombre_categoria=row[5]
+            )
+            return producto
+        return None    

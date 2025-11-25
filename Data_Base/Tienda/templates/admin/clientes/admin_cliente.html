@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Clientes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Gestión de Clientes</h1>
+            <nav class="admin-nav">
+                <a href="{{ url_for('admin_bp.admin_productos') }}">Productos</a>
+                <a href="{{ url_for('admin_bp.admin_customers') }}">Clientes</a>
+                <a href="{{ url_for('customer_bp.home') }}">Volver al Inicio</a>
+            </nav>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer.id_customer }}</td>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.lastname }}</td>
+                        <td>{{ customer.email }}</td>
+                        <td>{{ customer.phone }}</td>
+                        <td>
+                            <a href="{{ url_for('admin_bp.editar_customer', id_customer=customer.id_customer) }}" class="btn-edit">Editar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

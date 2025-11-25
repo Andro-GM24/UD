@@ -303,16 +303,18 @@ CREATE OR REPLACE PROCEDURE sp_actualizar_cliente(
     p_nombre VARCHAR,
     p_apellido VARCHAR,
     p_email VARCHAR,
-    p_telefono VARCHAR -- 'telefono' domain
+    p_telefono VARCHAR,
+    p_contrasena VARCHAR
 )
 LANGUAGE plpgsql AS $$
 BEGIN
-    UPDATE CLIENTE
+    UPDATE cliente
     SET 
         nombre = p_nombre,
         apellido = p_apellido,
         email = p_email,
-        telefono = p_telefono
+        telefono = p_telefono,
+        contrasena = p_contrasena
     WHERE id_cliente = p_id_cliente;
 END;
 $$;
@@ -456,14 +458,13 @@ $$;
 
 
 -- función para listar productos en vista de productos(home)
-
 CREATE OR REPLACE FUNCTION fn_listar_productos()
 RETURNS TABLE (
     id_producto INT,
-    nombre VARCHAR,-- quisiera añadirle codigo de imagen
+    nombre VARCHAR,
     descripcion VARCHAR,
     precio FLOAT,
-    estado estado, -- Dominio 'estado'
+    estado VARCHAR,
     id_categoria INT,
     nombre_categoria VARCHAR
 )
@@ -479,10 +480,9 @@ BEGIN
         p.id_categoria,
         c.nombre AS nombre_categoria
     FROM PRODUCTO AS p
-    JOIN CATEGORIA AS c ON p.id_categoria = c.id_categoria;
-
-END;-- hacer operación join de categoria de una vez
-$$;
+    LEFT JOIN CATEGORIA AS c ON p.id_categoria = c.id_categoria;
+END;
+$$;--left join muestra categorias null
 -- Para usarla:
  SELECT * FROM fn_listar_productos();
 

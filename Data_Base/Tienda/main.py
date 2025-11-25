@@ -5,6 +5,7 @@ from controller.Carrito_controller import carrito_bp
 from controller.Producto_controller import producto_bp
 from controller.direccion_controller import direccion_bp
 from controller.pedido_controller import pedido_bp  
+from controller.admin_controller import admin_bp
 
 app = Flask(__name__,template_folder='templates')
 
@@ -20,6 +21,7 @@ app.register_blueprint(producto_bp)
 app.register_blueprint(carrito_bp)
 app.register_blueprint(direccion_bp)
 app.register_blueprint(pedido_bp)
+app.register_blueprint(admin_bp)
   
 
 if __name__ == "__main__":
